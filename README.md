@@ -1,5 +1,5 @@
 # MediSafe AI
-http://localhost:3000/(Project URL)
+http://localhost:3000/ (Project URL)
 
 ## Predictive Medical Inventory Management System
 
