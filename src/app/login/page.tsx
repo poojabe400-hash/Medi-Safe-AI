@@ -6,23 +6,39 @@ import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('aris.thorne@regionalhealth.gov');
-  const [password, setPassword] = useState('••••••••••••');
+  const [email, setEmail] = useState(' ');
+  const [password, setPassword] = useState(' ');
   const [facilityId, setFacilityId] = useState('DIST-04-HOSP-CENTRAL');
   const [department, setDepartment] = useState('Central Regional Medical Store');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setTimeout(() => {
-      router.push('/');
-    }, 800);
-  };
+ const handleLogin = (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!email.trim()) {
+    alert("Please enter your email.");
+    return;
+  }
+
+  if (!password.trim()) {
+    alert("Please enter your password.");
+    return;
+  }
+
+  setIsLoading(true);
+
+  // Store the logged-in user only for this browser session
+  sessionStorage.setItem("medisafe_user", email.trim());
+
+  setTimeout(() => {
+    router.replace("/dashboard");
+  }, 800);
+};
 
   const handleDemoFill = () => {
     setEmail('aris.thorne@regionalhealth.gov');
+    setPassword('••••••••••••');
     setFacilityId('DIST-04-HOSP-CENTRAL');
     setDepartment('Central Regional Medical Store');
   };

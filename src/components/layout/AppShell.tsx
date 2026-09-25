@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useMediSafe } from '@/context/MediSafeContext';
 import EmergencyReorderModal from '@/components/modals/EmergencyReorderModal';
 import CommandKModal from '@/components/modals/CommandKModal';
@@ -38,9 +38,9 @@ const DISTRICT_OPTIONS = [
   'South Area Medical Storage - District 09',
   'State Strategic Reserve Warehouse - Central',
 ];
-
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const {
     alerts,
     activeDistrict,
@@ -51,14 +51,29 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     isSyncing,
   } = useMediSafe();
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isDistrictDropdownOpen, setIsDistrictDropdownOpen] = useState(false);
+ const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+const [isDistrictDropdownOpen, setIsDistrictDropdownOpen] = useState(false);
 
-  // If path is /login, don't show the dashboard shell
-  if (pathname === '/login') {
-    return <>{children}</>;
+useEffect(() => {
+  if (pathname === "/login") {
+    return;
   }
 
+  const user = sessionStorage.getItem("medisafe_user");
+
+  if (!user) {
+    router.replace("/login");
+  }
+}, [pathname, router]);
+
+// If path is /login, don't show the dashboard shell
+if (pathname === '/login') {
+  return <>{children}</>;
+}
+const handleLogout = () => {
+  sessionStorage.removeItem("medisafe_user");
+  router.replace("/login");
+};
   const unreadAlerts = alerts.filter((a) => !a.acknowledged).length;
 
   return (
