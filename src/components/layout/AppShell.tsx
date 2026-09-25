@@ -17,7 +17,7 @@ interface NavItem {
 }
 
 const CLINICAL_NAV: NavItem[] = [
-  { name: 'Dashboard', path: '/', icon: 'dashboard' },
+  { name: 'Dashboard', path: '/dashboard', icon: 'dashboard' },
   { name: 'Medicine Inventory', path: '/inventory', icon: 'medication' },
   { name: 'Daily Stock Update', path: '/daily-stock-update', icon: 'inventory_2' },
   { name: 'Sales & Consumption', path: '/sales-and-consumption', icon: 'trending_up' },
@@ -63,6 +63,7 @@ useEffect(() => {
 
   if (!user) {
     router.replace("/login");
+    return;
   }
 }, [pathname, router]);
 
