@@ -285,13 +285,6 @@ export default function LoginPage() {
                 </button>
               </form>
 
-              <div className="mt-6 pt-4 border-t border-outline-variant/30 flex items-center justify-between text-[11px] text-on-surface-variant font-mono">
-                <span>ISO 27001 Certified</span>
-                <span>•</span>
-                <span>21 CFR Part 11</span>
-                <span>•</span>
-                <span>DISHA Public Health</span>
-              </div>
             </div>
           </div>
         </div>
